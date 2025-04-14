@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Private Video Access</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    iframe {
+      margin-top: 20px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>Loading video...</h2>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("v");
+
+    if (!code) {
+      document.body.innerHTML = "<h2>Invalid access — no code provided.</h2>";
+    } else {
+      fetch("https://api.ipify.org?format=json")
+        .then(res => res.json())
+        .then(data => {
+          const ip = data.ip;
+          const url = `https://script.google.com/macros/s/AKfycbw5nCbczsCOH81q-2p0VNbJtceKOJ3fzDHnOE1JI7JXC0vcZbW89RRBBBGEHzdqKumm/exec?v=${code}&ip=${ip}`;
+
+          fetch(url)
+            .then(res => res.text())
+            .then(videoId => {
+              if (videoId === "INVALID") {
+                document.body.innerHTML = "<h2>Access Denied</h2><p>Your code is invalid.</p>";
+              } else {
+                document.body.innerHTML = `
+                  <h2>Your video:</h2>
+                  <iframe width="560" height="315"
+        src="https://www.youtube.com/embed/${videoId}?modestbranding=1&controls=1&rel=0&disablekb=1"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+</iframe>`;
+              }
+            })
+            .catch(() => {
+              document.body.innerHTML = "<h2>Server error</h2><p>Try again later.</p>";
+            });
+        })
+        .catch(() => {
+          document.body.innerHTML = "<h2>Could not get your IP</h2><p>Check your network or disable ad blockers.</p>";
+        });
+    }
+  </script>
+</body>
+</html>
