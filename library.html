@@ -43,8 +43,16 @@
         src="https://www.youtube.com/embed/${videoId}?modestbranding=1&controls=1&rel=0&disablekb=1"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>
-</iframe>`;
-              }
+</iframe>  
+        <div style="margin-top: 20px; text-align: left; max-width: 560px; margin-left: auto; margin-right: auto; font-size: 14px; line-height: 1.6;">
+          <p>00:00 Introduction<br>
+          00:20 Real Case, Measurable benefits<br>
+          02:14 Pricera‘s approach<br>
+          03:14 Simplified use-case<br>
+          04:45 Demo – Replicate & Automate<br>
+          07:30 Demo - Optimize</p>
+        </div>;
+              `}
             })
             .catch(() => {
               document.body.innerHTML = "<h2>Server error</h2><p>Try again later.</p>";
